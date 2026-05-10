@@ -47,19 +47,10 @@ describe('InventoryTable', () => {
     const onReduceClick = vi.fn();
     render(<InventoryTable products={mockProducts} isLoading={false} onReduceClick={onReduceClick} />);
 
-    // Click Reduce Stock button for first product (Laptop)
-    const reduceButton = screen.getByTestId
-      ? screen.queryByText('Reduce Stock') // first one in DOM
-      : screen.getAllByText('Reduce Stock')[0];
-
-    if (reduceButton) {
-      fireEvent.click(reduceButton);
-    } else {
-      // Find by id
-      const btn = document.getElementById('reduce-btn-1');
-      expect(btn).not.toBeNull();
-      fireEvent.click(btn!);
-    }
+    // Click Reduce Stock button for Laptop (id=1) via its element id
+    const btn = document.getElementById('reduce-btn-1');
+    expect(btn).not.toBeNull();
+    fireEvent.click(btn!);
 
     expect(onReduceClick).toHaveBeenCalledTimes(1);
   });
