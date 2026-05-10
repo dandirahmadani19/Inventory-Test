@@ -1,0 +1,45 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Category {
+  id        Int       @id @default(autoincrement())
+  name      String    @unique
+  products  Product[]
+  createdAt DateTime  @default(now()) @map("created_at")
+
+  @@map("categories")
+}
+
+model Product {
+  id         Int        @id @default(autoincrement())
+  name       String
+  stock      Int        @default(0)
+  categoryId Int        @map("category_id")
+  category   Category   @relation(fields: [categoryId], references: [id])
+  stockLogs  StockLog[]
+  createdAt  DateTime   @default(now()) @map("created_at")
+  updatedAt  DateTime   @updatedAt @map("updated_at")
+
+  @@map("products")
+}
+
+model StockLog {
+  id        Int      @id @default(autoincrement())
+  productId Int      @map("product_id")
+  product   Product  @relation(fields: [productId], references: [id])
+  change    Int      // negative = reduce, positive = restock
+  note      String?
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("stock_logs")
+}

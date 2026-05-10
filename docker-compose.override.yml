@@ -1,0 +1,22 @@
+# Development overrides — automatically merged with docker-compose.yml
+# Usage: docker compose up  (both files are merged automatically)
+
+services:
+  backend:
+    build:
+      target: development
+    volumes:
+      - ./backend/src:/app/src     # Mount source for hot reload
+      - ./backend/prisma:/app/prisma
+    command: npm run dev
+    environment:
+      NODE_ENV: development
+
+  frontend:
+    build:
+      target: development
+    volumes:
+      - ./frontend/app:/app/app    # Mount source for hot reload
+    command: npm run dev
+    environment:
+      NODE_ENV: development
