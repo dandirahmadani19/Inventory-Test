@@ -10,7 +10,7 @@ Fullstack application untuk admin gudang memantau dan mengelola stok barang seca
 | Side | Stack |
 |------|-------|
 | **Backend** | Node.js 20 + TypeScript + Express + Prisma + PostgreSQL |
-| **Frontend** | Next.js 14 (App Router) + TypeScript + TanStack Query + Zustand + Tailwind CSS |
+| **Frontend** | Next.js 16 (App Router) + TypeScript + TanStack Query + Zustand + Tailwind CSS |
 | **Testing** | Jest + Supertest (BE) · Vitest + React Testing Library (FE) |
 | **API Docs** | Swagger UI (`/api/docs`) |
 | **Container** | Docker + Docker Compose |
@@ -82,8 +82,7 @@ Frontend berjalan di: **http://localhost:3000**
 ## 🐳 Cara Menjalankan (Dengan Docker)
 
 ```bash
-# Di root project
-cp .env.docker .env.docker  # sudah ada nilainya, bisa langsung pakai
+# Di root project (.env.docker sudah ada nilainya, bisa langsung pakai)
 
 # Jalankan semua services (DB + Backend + Frontend)
 docker compose up --build
@@ -108,7 +107,7 @@ docker compose exec backend npm run db:seed
 | Frontend | http://localhost:3000 |
 | Backend API | http://localhost:3001 |
 | Swagger UI | http://localhost:3001/api/docs |
-| PostgreSQL | localhost:5432 |
+| PostgreSQL | localhost:5433 |
 
 **Stop:**
 ```bash
@@ -121,6 +120,9 @@ docker compose down -v       # stop + hapus volume DB (reset data)
 ## 🧪 Menjalankan Tests
 
 ### Backend — Race Condition Test
+
+> **Perhatian:** test backend membutuhkan koneksi database. Pastikan PostgreSQL sudah berjalan sebelum menjalankan test.
+> Jika menggunakan Docker, pastikan container DB aktif (`docker compose up -d db`) — database tersedia di `localhost:5433`.
 
 ```bash
 cd backend
