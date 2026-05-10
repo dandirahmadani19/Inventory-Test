@@ -88,10 +88,20 @@ cp .env.docker .env.docker  # sudah ada nilainya, bisa langsung pakai
 # Jalankan semua services (DB + Backend + Frontend)
 docker compose up --build
 
+# Atau jalankan di background (detached mode)
+docker compose up --build -d
+
 # Setelah services up, jalankan migration & seed
 docker compose exec backend npx prisma migrate deploy
 docker compose exec backend npm run db:seed
 ```
+
+> **Detached mode** (`-d`): services berjalan di background, terminal tetap bebas digunakan. Gunakan perintah berikut untuk memantau log:
+> ```bash
+> docker compose logs -f           # semua services
+> docker compose logs -f backend   # hanya backend
+> docker compose logs -f frontend  # hanya frontend
+> ```
 
 | Service | URL |
 |---------|-----|
